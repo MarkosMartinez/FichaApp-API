@@ -2,11 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
 Route::GET('test', function () {
-    return response()->json(['estado' => 'ok', 'message' => 'La API funciona!']);
+    return response()->json(['success' => true, 'message' => 'La API funciona!']);
 });
+
+# Gestion de usuarios
+Route::middleware('auth:api')->group( function () {
+    Route::POST('add-usuario', [AuthController::class, 'add']);
+    Route::GET('logout', [AuthController::class, 'logout']);
+    Route::GET('logoutall', [AuthController::class, 'logoutall']);
+});
+Route::POST('login', [AuthController::class, 'login']);
