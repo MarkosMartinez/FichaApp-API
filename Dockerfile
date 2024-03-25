@@ -13,10 +13,10 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Configurar el directorio de trabajo
-WORKDIR /proyecto
+WORKDIR /var/www/html
 
 # Copiar los ficheros en /proyecto
-COPY . /proyecto
+COPY . /var/www/html
 
 # Instalar dependencias del proyecto
 RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
@@ -25,4 +25,4 @@ RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-interacti
 EXPOSE 8080
 
 # Start the container running php /artisan serve
-CMD ["php", "/proyecto/artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
