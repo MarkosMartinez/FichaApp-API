@@ -14,7 +14,7 @@ Route::GET('test', function () {
 
 # Gestion de usuarios
 Route::middleware('auth:api')->group( function () {
-    Route::POST('add-usuario', [AuthController::class, 'add']);
+    Route::POST('add-user', [AuthController::class, 'add']);
     Route::GET('logout', [AuthController::class, 'logout']);
     Route::GET('logoutall', [AuthController::class, 'logoutall']);
 });

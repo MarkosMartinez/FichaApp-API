@@ -9,7 +9,6 @@ storage/logs/*
 *.env*
 .rr.yml
 rr
-frankenphp
 vendor
 
 # 2. Ignore common files/directories we don't need

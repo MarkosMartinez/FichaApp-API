@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for fichaapp-api on 2024-03-16T15:38:12Z
+# fly.toml app configuration file generated for fichaapp-api on 2024-03-25T21:30:36Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -12,8 +12,12 @@ console_command = 'php /var/www/html/artisan tinker'
     NODE_VERSION = '18'
     PHP_VERSION = '8.2'
 
+[mounts]
+  source="fichaappapistorage"
+  destination="/var/www/html/storage/"
+  initial_size = "1gb"
+
 [env]
-  APP_URL = "https://fichaapp-api.fly.dev"
   APP_ENV = 'production'
   LOG_CHANNEL = 'stderr'
   LOG_LEVEL = 'info'
@@ -30,6 +34,6 @@ console_command = 'php /var/www/html/artisan tinker'
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 1024
