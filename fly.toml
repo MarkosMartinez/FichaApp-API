@@ -14,7 +14,7 @@ console_command = 'php /var/www/html/artisan tinker'
 
 [mounts]
   source="fichaappapistorage"
-  destination="/var/www/html/storage/"
+  destination="/var/www/html/secrets/"
   initial_size = "1gb"
 
 [env]
