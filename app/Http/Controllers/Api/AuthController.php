@@ -20,6 +20,7 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
+            'rol' => 'required',
         ]);
         
         if($validator->fails()){
@@ -50,6 +51,7 @@ class AuthController extends Controller
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('FichaApp')-> accessToken; 
             $success['name'] =  $user->name;
+            $success['rol'] =  $user->rol;
             
             return response()->json([
                 'success' => true,
@@ -66,6 +68,7 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request)
+
     {
         $user = Auth::user()->token();
         $user->delete();
@@ -75,7 +78,9 @@ class AuthController extends Controller
             'message' => 'Sesion cerrada correctamente!',
         ]);
     }
+
         public function logoutall(Request $request)
+        
     {
         Auth::user()->tokens->each(function($token, $key) {
             $token->delete();
