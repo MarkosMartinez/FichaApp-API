@@ -18,7 +18,7 @@ class ManagerChecker
     public function handle(Request $request, Closure $next): Response
 
     {
-        if (Auth::guard('api')->check() && Auth::guard('api')->user()->rol === 'manager') {
+        if (Auth::guard('api')->check() && Auth::guard('api')->user()->role === 'manager') {
             return $next($request);
         }
         return response()->json([
