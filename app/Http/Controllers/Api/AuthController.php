@@ -19,7 +19,7 @@ class AuthController extends Controller
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('FichaApp')-> accessToken; 
             $success['name'] =  $user->name;
-            $success['rol'] =  $user->rol;
+            $success['role'] =  $user->role;
             
             return response()->json([
                 'success' => true,

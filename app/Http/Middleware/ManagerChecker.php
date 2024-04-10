@@ -25,6 +25,6 @@ class ManagerChecker
                 'success' => false,
                 'message' => 'Unauthorised',
                 'error'=>'Unauthorised',
-                ])->header('code', '403');
+        ]);//->header('code', '403');
     }
 }

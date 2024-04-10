@@ -29,7 +29,7 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
-            'rol' => 'required',
+            'role' => 'required',
         ]);
         
         if($validator->fails()){
