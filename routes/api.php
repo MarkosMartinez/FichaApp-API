@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ConfigController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
@@ -33,4 +34,11 @@ Route::middleware('auth:api')->group( function () {
 
 Route::middleware('manager')->group( function () {
     Route::GET('users', [UserController::class, 'index']);
+});
+
+
+# Configuración
+Route::middleware('manager')->group( function () {
+    Route::GET('get-config', [ConfigController::class, 'getAll']);
+    Route::POST('set-config', [ConfigController::class, 'set']);
 });

@@ -13,7 +13,6 @@ class AuthController extends Controller
 {
 
     public function login(Request $request): JsonResponse
-
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
@@ -36,7 +35,6 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request)
-
     {
         $user = Auth::user()->token();
         $user->delete();
@@ -48,7 +46,6 @@ class AuthController extends Controller
     }
 
         public function logoutall(Request $request)
-        
     {
         Auth::user()->tokens->each(function($token, $key) {
             $token->delete();

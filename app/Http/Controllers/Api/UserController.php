@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function index(Request $request): JsonResponse
-
     {
         $usuarios = User::all();
         return response()->json([
@@ -22,7 +21,6 @@ class UserController extends Controller
     }
 
     public function add(Request $request): JsonResponse
-
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
