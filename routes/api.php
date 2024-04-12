@@ -38,7 +38,7 @@ Route::middleware('manager')->group( function () {
 
 
 # Configuración
+Route::GET('get-config', [ConfigController::class, 'getAll']);
 Route::middleware('manager')->group( function () {
-    Route::GET('get-config', [ConfigController::class, 'getAll']);
     Route::POST('set-config', [ConfigController::class, 'set']);
 });
