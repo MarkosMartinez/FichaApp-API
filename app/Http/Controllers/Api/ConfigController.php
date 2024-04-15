@@ -23,45 +23,23 @@ class ConfigController extends Controller
     }
 
     public function set(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'key' => 'required',
-        'value' => 'required',
-    ]);
+    {
+        $configuracion = Config::first();
 
-    if ($validator->fails()) {
+        if (!$configuracion) {
+            return response()->json([
+                'success' => false,
+                'error' => 'No se encontró ningún registro en la base de datos de configuración',
+            ]);
+        }
+
+        $configuracion->update($request->only(['language', 'app_name']));
+        $configuracion->save();
+
         return response()->json([
-            'success' => false,
-            'error' => $validator->errors(),
+            'success' => true,
         ]);
     }
-
-    $key = $request->input('key');
-    $value = $request->input('value');
-
-    $configuracion = Config::first();
-
-    if (!$configuracion) {
-        return response()->json([
-            'success' => false,
-            'error' => 'No se encontró ningún registro en la base de datos de configuración',
-        ]);
-    }
-
-    if (!$configuracion->{$key}) {
-        return response()->json([
-            'success' => false,
-            'error' => 'La clave especificada no existe en el registro de configuración',
-        ]);
-    }
-
-    $configuracion->update([$key => $value]);
-    $configuracion->save();
-
-    return response()->json([
-        'success' => true,
-    ]);
-}
 
     
 }
