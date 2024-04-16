@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ConfigController;
+use App\Http\Controllers\Api\TimeLogController;
 
 Route::get('user', function (Request $request) {
     return $request->user();
@@ -41,4 +42,11 @@ Route::middleware('manager')->group( function () {
 Route::GET('get-config', [ConfigController::class, 'getAll']);
 Route::middleware('manager')->group( function () {
     Route::POST('set-config', [ConfigController::class, 'set']);
+});
+
+
+# Fichar
+Route::middleware('auth:api')->group( function () {
+    Route::GET('punch-in', [TimeLogController::class, 'punchin']);
+    Route::GET('get-signings', [TimeLogController::class, 'getSignings']);
 });
