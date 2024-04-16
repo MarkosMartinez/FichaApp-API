@@ -47,6 +47,6 @@ Route::middleware('manager')->group( function () {
 
 # Fichar
 Route::middleware('auth:api')->group( function () {
-    Route::GET('punch-in', [TimeLogController::class, 'punchin']);
+    Route::GET('punch-inout', [TimeLogController::class, 'punchinout']);
     Route::GET('get-signings', [TimeLogController::class, 'getSignings']);
 });

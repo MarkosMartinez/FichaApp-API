@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class TimeLogController extends Controller
 {
 
-    public function punchin(Request $request)
+    public function punchinout(Request $request)
     {
         $user = auth()->user();
 
@@ -52,7 +52,7 @@ class TimeLogController extends Controller
             ->take(7)
             ->get();
 
-        return response()->json(['signings' => $signings]);
+        return response()->json(['success' => true, 'signings' => $signings]);
     }
 
 }
