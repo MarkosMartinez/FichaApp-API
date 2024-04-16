@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('time_logs', function (Blueprint $table) {
             $table->unsignedBigInteger('userid');
-            $table->time('enter_time');
-            $table->time('exit_time')->nullable();
+            $table->timestamp('enter_time');
+            $table->timestamp('exit_time')->nullable();
             $table->foreign('userid')->references('id')->on('users');
         });
     }
