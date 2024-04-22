@@ -41,5 +41,12 @@ class ConfigController extends Controller
         ]);
     }
 
+    public function getTime()
+    {
+        return response()->json([
+            'success' => true,
+            'serverTime' => now()->toDateTimeString(),
+            ]);
+    }
     
 }
