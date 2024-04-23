@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -50,4 +51,106 @@ class UserController extends Controller
             ]);
     }
 
+    public function edit(Request $request): JsonResponse
+    {
+        if($request->id && Auth::guard('api')->user()->role === 'manager'){
+
+            $user = User::findOrFail($request->id);
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email',
+                'role' => 'required',
+                'id' => 'required',
+            ]);
+            
+            if($validator->fails()){
+                return response()->json([
+                'success' => false,
+                'message' => 'Error al modificar el usuario!',
+                ]);
+            }
+            if($request->new_password){
+                $validator = Validator::make($request->all(), [
+                    'new_password' => 'required',
+                    'c_new_password' => 'required|same:new_password',
+                ]);
+                if($validator->fails()){
+                    return response()->json([
+                    'success' => false,
+                    'message' => 'Error al modificar el usuario! Las contraseñas no coinciden',
+                ]);
+                }
+                $user->password = bcrypt($request->new_password);
+            }
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuario modificado correctamente.',
+                ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+            
+            if($validator->fails()){
+                return response()->json([
+                'success' => false,
+                'message' => 'Error al modificar el usuario!',
+                ]);
+            }
+            Auth::shouldUse('web');
+            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+                
+                $user = auth()->user();
+
+                if($request->new_password){
+                    $validator = Validator::make($request->all(), [
+                        'new_password' => 'required',
+                        'c_new_password' => 'required|same:new_password',
+                    ]);
+                    if($validator->fails()){
+                        return response()->json([
+                        'success' => false,
+                        'message' => 'Error al modificar el usuario! Las contraseñas no coinciden',
+                    ]);
+                    }
+                    $user->password = bcrypt($request->new_password);
+                }
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuario modificado correctamente.',
+                ]);
+
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al modificar el usuario! Contraseña incorrecta.',
+                    ]);
+            }
+        }
+    }
+
+    public function get(Request $request): JsonResponse
+    {
+        if($request->id && Auth::guard('api')->user()->role === 'manager'){
+            $user = User::findOrFail($request->id);
+        }else{
+            $user = auth()->user();
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Informacion del usuario obtenida.',
+            'data' => $user,
+            ]);
+    }
 }

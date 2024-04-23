@@ -28,9 +28,12 @@ Route::GET('check-token', function () {
 });
 
 
-# Gestion de usuarios
+# Gestion de usuario
 Route::middleware('auth:api')->group( function () {
     Route::POST('add-user', [UserController::class, 'add']);
+    Route::POST('edit-profile', [UserController::class, 'edit']);
+    Route::GET('get-profile', [UserController::class, 'get']);
+    # Eliminar?
 });
 
 Route::middleware('manager')->group( function () {
