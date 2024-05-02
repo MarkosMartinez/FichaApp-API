@@ -45,7 +45,7 @@ class AuthController extends Controller
         ]);
     }
 
-        public function logoutall(Request $request)
+        public function logoutAll(Request $request)
     {
         Auth::user()->tokens->each(function($token, $key) {
             $token->delete();

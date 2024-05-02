@@ -7,10 +7,12 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ConfigController;
 use App\Http\Controllers\Api\TimeLogController;
 
-Route::get('user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+// Route::get('user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:api');
 
+
+# Test
 Route::GET('test', function () {
     return response()->json(['success' => true, 'message' => 'La API funciona!']);
 });
@@ -19,7 +21,7 @@ Route::GET('test', function () {
 # Gestion de sesiónes
 Route::middleware('auth:api')->group( function () {
     Route::GET('logout', [AuthController::class, 'logout']);
-    Route::GET('logoutall', [AuthController::class, 'logoutall']);
+    Route::GET('logoutall', [AuthController::class, 'logoutAll']);
 });
 Route::POST('login', [AuthController::class, 'login']);
 
@@ -50,6 +52,6 @@ Route::GET('get-time', [ConfigController::class, 'getTime']); // Con autenticaci
 
 # Fichajes
 Route::middleware('auth:api')->group( function () {
-    Route::GET('punch-inout', [TimeLogController::class, 'punchinout']);
+    Route::GET('punch-inout', [TimeLogController::class, 'punchInOut']);
     Route::GET('get-signings', [TimeLogController::class, 'getSignings']);
 });

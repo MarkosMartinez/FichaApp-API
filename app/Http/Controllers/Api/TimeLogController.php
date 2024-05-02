@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class TimeLogController extends Controller
 {
 
-    public function punchinout(Request $request)
+    public function punchInOut(Request $request)
     {
         $user = auth()->user();
 
