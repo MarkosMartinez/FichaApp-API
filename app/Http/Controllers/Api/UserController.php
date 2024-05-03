@@ -104,10 +104,8 @@ class UserController extends Controller
                 ]);
             }
             Auth::shouldUse('web');
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-                
-                $user = auth()->user();
-
+            $user = Auth::guard('api')->user();
+            if(Auth::attempt(['email' => Auth::guard('api')->user()->email, 'password' => $request->password])){
                 if($request->new_password){
                     $validator = Validator::make($request->all(), [
                         'new_password' => 'required',
