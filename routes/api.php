@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ConfigController;
 use App\Http\Controllers\Api\TimeLogController;
+use App\Http\Controllers\Api\AbsenceController;
 
 // Route::get('user', function (Request $request) {
 //     return $request->user();
@@ -54,4 +55,14 @@ Route::GET('get-time', [ConfigController::class, 'getTime']); // Con autenticaci
 Route::middleware('auth:api')->group( function () {
     Route::GET('punch-inout', [TimeLogController::class, 'punchInOut']);
     Route::GET('get-signings', [TimeLogController::class, 'getSignings']);
+});
+
+# Gestion de ausencias
+Route::middleware('auth:api')->group( function () {
+    Route::POST('add-absence', [AbsenceController::class, 'addAbsence']);
+    Route::GET('get-absences', [AbsenceController::class, 'getAbsences']);
+    Route::POST('delete-absence', [AbsenceController::class, 'deleteAbsence']);
+});
+Route::middleware('manager')->group( function () {
+    Route::GET('aprove-absence', [AbsenceController::class, 'aproveAbsence']);
 });
