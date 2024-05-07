@@ -6,6 +6,7 @@ use App\Models\Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 
 class ConfigController extends Controller
@@ -47,6 +48,16 @@ class ConfigController extends Controller
             'success' => true,
             'serverTime' => now()->toDateTimeString(),
             ]);
+    }
+
+    public function resetDb(Request $request)
+    {
+        $sql = file_get_contents('../secrets/sql/FichaApp-DB.sql');
+        if($sql) DB::unprepared($sql);
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
     
 }

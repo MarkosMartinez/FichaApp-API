@@ -48,6 +48,7 @@ Route::middleware('manager')->group( function () {
 Route::GET('get-config', [ConfigController::class, 'getAll']);
 Route::middleware('manager')->group( function () {
     Route::POST('set-config', [ConfigController::class, 'set']);
+    Route::GET('reset-db', [ConfigController::class, 'resetDb']);
 });
 Route::GET('get-time', [ConfigController::class, 'getTime']); // Con autenticacion o sin?
 
