@@ -120,14 +120,14 @@ class UserController extends Controller
                     $user->password = bcrypt($request->new_password);
                 }
 
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->save();
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->save();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Usuario modificado correctamente.',
-                ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Usuario modificado correctamente.',
+                    ]);
 
             }else{
                 return response()->json([
