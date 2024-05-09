@@ -59,7 +59,7 @@ class AbsenceController extends Controller
             $userid = Auth::guard('api')->user()->id;
         }
 
-        $absences = Absence::where('userid', $userid)->get();
+        $absences = Absence::where('userid', $userid)->orderBy('id', 'desc')->take(10)->get();
 
         return response()->json(['success' => true, 'data' => $absences], 200);
     }
