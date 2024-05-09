@@ -46,11 +46,11 @@ Route::middleware('manager')->group( function () {
 
 # Configuración
 Route::GET('get-config', [ConfigController::class, 'getAll']);
+Route::GET('get-time', [ConfigController::class, 'getTime']);
 Route::middleware('manager')->group( function () {
     Route::POST('set-config', [ConfigController::class, 'set']);
     Route::GET('reset-db', [ConfigController::class, 'resetDb']);
 });
-Route::GET('get-time', [ConfigController::class, 'getTime']); // Con o sin autenticacion?
 
 # Fichajes
 Route::middleware('auth:api')->group( function () {
@@ -65,5 +65,5 @@ Route::middleware('auth:api')->group( function () {
     Route::POST('delete-absence', [AbsenceController::class, 'deleteAbsence']);
 });
 Route::middleware('manager')->group( function () {
-    Route::GET('approve-absence', [AbsenceController::class, 'aproveAbsence']);
+    Route::POST('approve-absence', [AbsenceController::class, 'aproveAbsence']);
 });
