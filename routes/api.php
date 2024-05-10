@@ -65,5 +65,6 @@ Route::middleware('auth:api')->group( function () {
     Route::POST('delete-absence', [AbsenceController::class, 'deleteAbsence']);
 });
 Route::middleware('manager')->group( function () {
+    Route::GET('get-pending-absences', [AbsenceController::class, 'getPendingAbsences']);
     Route::POST('approve-absence', [AbsenceController::class, 'aproveAbsence']);
 });

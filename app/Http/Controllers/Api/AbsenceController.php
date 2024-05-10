@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Absence;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,20 @@ class AbsenceController extends Controller
         }
 
         $absences = Absence::where('userid', $userid)->orderBy('id', 'desc')->take(10)->get();
+
+        return response()->json(['success' => true, 'data' => $absences], 200);
+    }
+
+    public function getPendingAbsences(Request $request): JsonResponse
+    {
+        if(Auth::guard('api')->user()->role == "manager"){
+            $userid = $request->userid ?? Auth::guard('api')->user()->id;
+        }else{
+            $userid = Auth::guard('api')->user()->id;
+        }
+
+        $today = Carbon::today();
+        $absences = Absence::where('approved', null)->where('start_time', '>', $today)->get();
 
         return response()->json(['success' => true, 'data' => $absences], 200);
     }
