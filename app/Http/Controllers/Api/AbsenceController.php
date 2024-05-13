@@ -17,10 +17,10 @@ class AbsenceController extends Controller
     public function addAbsence(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'start_time' => 'required|date',
-            'end_time' => 'required|date',
+            'start_time' => 'required|date|before:2038-01-18',
+            'end_time' => 'required|date|after:start_time|before:2038-01-18',
             'type' => 'required|string|max:12'
-        ]);
+        ]);        
 
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()], 400);
